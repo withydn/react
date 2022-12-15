@@ -40,11 +40,16 @@ export function done(id) {
   };
 }
 
+// create("리덕스 마스터 하기");
+// { type: CREATE,
+//   payload: "리덕스 마스터하기"}
+// 우체부가 전달할 것이 밑의 내용
+
 // 리듀서 설정(실제 작업은 이친구가 합니다!)
 export default function todo(state = initState, action) {
   switch (action.type) {
     case CREATE:
-      return console.log("CREATE 호출");
+      return console.log(action.payload);
     case DONE:
       return console.log("DONE 호출");
     default:
