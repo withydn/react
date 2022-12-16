@@ -11,7 +11,7 @@ const initState = {
     {
       id: 1,
       text: "척추 펴기!",
-      done: true,
+      done: false,
     },
     {
       id: 2,
@@ -20,6 +20,8 @@ const initState = {
     },
   ],
 };
+let counts = initState.list.length;
+initState["nextID"] = counts;
 
 // 액션 타입 정의
 const CREATE = "todo/CREATE";
@@ -49,9 +51,29 @@ export function done(id) {
 export default function todo(state = initState, action) {
   switch (action.type) {
     case CREATE:
-      return console.log(action.payload);
+      return {
+        ...state,
+        list: state.list.concat({
+          id: action.payload.id,
+          text: action.payload.text,
+          done: false,
+        }),
+        nextID: action.payload.id + 1,
+      };
     case DONE:
-      return console.log("DONE 호출");
+      return {
+        ...state,
+        list: state.list.map((el) => {
+          if (el.id === action.id) {
+            return {
+              ...el,
+              done: true,
+            };
+          } else {
+            return el;
+          }
+        }),
+      };
     default:
       return state;
   }
