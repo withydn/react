@@ -1,5 +1,9 @@
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import './App.css';
+import GlobalStyle from './Components/GlobalStyle';
+import Mbti from './pages/Mbti';
+import Show from './pages/Show';
 import Start from './pages/Start';
 
 const Main = styled.main`
@@ -12,10 +16,20 @@ const Main = styled.main`
 `;
 
 function App() {
+  const page = useSelector((state) => state.mbti.page);
+  const survey = useSelector((state) => state.mbti.survey);
+
   return (
     <>
+      <GlobalStyle />
       <Main>
-        <Start />
+        {page === 0 ? (
+          <Start />
+        ) : page !== survey.length + 1 ? (
+          <Mbti />
+        ) : (
+          <Show />
+        )}
       </Main>
     </>
   );
